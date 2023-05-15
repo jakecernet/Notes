@@ -1,22 +1,20 @@
 // Retrieve existing notes from local storage
 let notes = JSON.parse(localStorage.getItem('notes')) || [];
 
-count = 0;
-
 // Display existing notes
 function displayNotes() {
     const notesContainer = document.getElementById('notes');
     notesContainer.innerHTML = '';
 
     if (notes.length === 0) {
-        notesContainer.innerHTML = '<h2>No notes yet</h2>';
-        count = 0;
+        notesContainer.innerHTML = '<p>No notes yet</p>';
     } else {
         notes.forEach(function (note, index) {
             const noteElement = document.createElement('div');
             noteElement.className = 'note';
             noteElement.innerHTML = `
-                <span>${count} + ${note}</span>
+                <span class="note-number">${index + 1}.</span>
+                <span>${note}</span>
                 <button class="delete-btn" onclick="deleteNote(${index})">Delete</button>
             `;
             notesContainer.appendChild(noteElement);
@@ -46,4 +44,11 @@ function deleteNote(index) {
 
 // Event listeners
 document.getElementById('add-btn').addEventListener('click', addNote);
-document.addEventListener('DOMContentLoaded', displayNotes);
+document.getElementById('note-input').addEventListener('keyup', function (event) {
+    if (event.keyCode === 13) {
+        addNote();
+    }
+});
+
+// Initial display of notes
+displayNotes();
