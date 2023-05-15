@@ -1,0 +1,87 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #3f3f3f;
+}
+
+.notes-container {
+    margin-top: 20px;
+}
+
+.notes-container .input-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+.notes-container input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.664);
+}
+
+.notes-container button {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.678);
+}
+
+.notes-container button:hover {
+    background-color: #45a049;
+}
+
+.note {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.555);
+    position: relative;
+}
+
+.note span {
+    font-size: 18px;
+    color: #3f3f3f;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.note .delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #3f3f3f;
+}
+
+.note .delete-btn:hover {
+    background-color: rgba(115, 195, 233, 0.548);
+}
