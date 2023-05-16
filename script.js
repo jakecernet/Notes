@@ -1,21 +1,22 @@
 // Retrieve existing notes from local storage
 let notes = JSON.parse(localStorage.getItem('notes')) || [];
+let filteredNotes = []; // Array to store filtered notes
 
 // Display existing notes
 function displayNotes() {
     const notesContainer = document.getElementById('notes');
     notesContainer.innerHTML = '';
 
-    if (notes.length === 0) {
-        notesContainer.innerHTML = '<p>No notes yet</p>';
+    if (filteredNotes.length === 0) {
+        notesContainer.innerHTML = '<p>No notes found</p>';
     } else {
-        notes.forEach(function (note, index) {
+        filteredNotes.forEach(function (note, index) {
             const noteElement = document.createElement('div');
             noteElement.className = 'note';
             noteElement.innerHTML = `
                 <span class="note-number">${index + 1}.</span>
-                <span>${note}</span>
-                <button class="edit-btn" onclick="editNote(${index})">✎</button>
+                <span>${note.title}</span>
+                <button class="edit-btn" onclick="editNote(${index})">Edit</button>
                 <button class="delete-btn" onclick="deleteNote(${index})">Delete</button>
             `;
             notesContainer.appendChild(noteElement);
@@ -29,10 +30,11 @@ function addNote() {
     const noteText = noteInput.value.trim();
 
     if (noteText !== '') {
-        notes.push(noteText);
+        const newNote = { title: noteText, content: '', tags: [], date: new Date().toISOString() };
+        notes.push(newNote);
         localStorage.setItem('notes', JSON.stringify(notes));
         noteInput.value = '';
-        displayNotes();
+        filterNotes(document.getElementById('search-input').value.trim()); // Reapply filtering
     }
 }
 
@@ -40,86 +42,39 @@ function addNote() {
 function deleteNote(index) {
     notes.splice(index, 1);
     localStorage.setItem('notes', JSON.stringify(notes));
-    displayNotes();
+    filterNotes(document.getElementById('search-input').value.trim()); // Reapply filtering
 }
-
-// Edit a note
-// ...
 
 // Edit a note
 function editNote(index) {
-    const noteElement = document.getElementById('notes').children[index];
-    const noteText = noteElement.querySelector('span:not(.note-number)').textContent;
+    // Edit note functionality
+}
 
-    // Replace the note text with an input field
-    const inputElement = document.createElement('input');
-    inputElement.type = 'text';
-    inputElement.value = noteText;
-    noteElement.replaceChild(inputElement, noteElement.querySelector('span:not(.note-number)'));
-
-    // Replace the Edit button with Save and Cancel buttons
-    const editBtn = noteElement.querySelector('.edit-btn');
-    editBtn.textContent = 'Save';
-    editBtn.onclick = function () {
-        saveNoteEdit(index);
-    };
-
-    const cancelBtn = document.createElement('button');
-    cancelBtn.className = 'cancel-btn';
-    cancelBtn.textContent = 'Cancel';
-    cancelBtn.onclick = function () {
-        cancelNoteEdit(index, noteText);
-    };
-    noteElement.appendChild(cancelBtn);
-
-    // Focus on the input field
-    inputElement.focus();
-
-    // Add event listeners for Enter and Escape keys
-    inputElement.addEventListener('keyup', function (event) {
-        if (event.keyCode === 13) {
-            saveNoteEdit(index);
-        } else if (event.keyCode === 27) {
-            cancelNoteEdit(index, noteText);
+// Sort notes based on the selected criterion
+function sortNotes(criterion) {
+    filteredNotes.sort(function (a, b) {
+        if (criterion === 'title') {
+            return a.title.localeCompare(b.title);
+        } else if (criterion === 'date') {
+            return new Date(a.date) - new Date(b.date);
         }
+        return 0;
     });
+
+    displayNotes();
 }
 
-// Save edited note
-function saveNoteEdit(index) {
-    const noteElement = document.getElementById('notes').children[index];
-    const inputElement = noteElement.querySelector('input');
-    const newNoteText = inputElement.value.trim();
+// Filter notes based on the keyword or tag
+function filterNotes(keyword) {
+    filteredNotes = notes.filter(function (note) {
+        return note.title.toLowerCase().includes(keyword.toLowerCase()) ||
+            note.tags.some(function (tag) {
+                return tag.toLowerCase().includes(keyword.toLowerCase());
+            });
+    });
 
-    if (newNoteText !== '') {
-        notes[index] = newNoteText;
-        localStorage.setItem('notes', JSON.stringify(notes));
-        displayNotes();
-    }
+    displayNotes();
 }
-
-// Cancel editing a note
-function cancelNoteEdit(index, oldNoteText) {
-    const noteElement = document.getElementById('notes').children[index];
-    const inputElement = noteElement.querySelector('input');
-
-    inputElement.value = oldNoteText;
-    noteElement.replaceChild(document.createElement('span'), inputElement);
-    noteElement.querySelector('.edit-btn').textContent = 'Edit';
-    noteElement.removeChild(noteElement.querySelector('.cancel-btn'));
-}
-
-//listen for escape key, close edit mode
-document.addEventListener('keydown', function (event) {
-    if (event.keyCode === 27) {
-        const editBtn = document.querySelector('.edit-btn');
-        if (editBtn) {
-            const index = editBtn.parentNode.querySelector('.note-number').textContent - 1;
-            const noteText = notes[index];
-            cancelNoteEdit(index, noteText);
-        }
-    }
-});
 
 // Event listeners
 document.getElementById('add-btn').addEventListener('click', addNote);
@@ -129,5 +84,10 @@ document.getElementById('note-input').addEventListener('keyup', function (event)
     }
 });
 
+document.getElementById('search-input').addEventListener('input', function (event) {
+    const keyword = event.target.value.trim();
+    filterNotes(keyword);
+});
+
 // Initial display of notes
-displayNotes();
+filterNotes(''); // Display all notes initially

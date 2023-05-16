@@ -14,6 +14,11 @@
 <body>
     <div class="container">
         <h1>Notes</h1>
+        <div id="controls">
+            <input type="text" id="search-input" placeholder="Search notes...">
+            <button onclick="sortNotes('title')">Sort by Title</button>
+            <button onclick="sortNotes('date')">Sort by Date</button>
+        </div>
         <div class="notes-container">
             <div class="input-container">
                 <input type="text" id="note-input" placeholder="Enter your note">
