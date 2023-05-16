@@ -15,6 +15,7 @@ function displayNotes() {
             noteElement.innerHTML = `
                 <span class="note-number">${index + 1}.</span>
                 <span>${note}</span>
+                <button class="edit-btn" onclick="editNote()">Edit</button>
                 <button class="delete-btn" onclick="deleteNote(${index})">Delete</button>
             `;
             notesContainer.appendChild(noteElement);
@@ -50,5 +51,19 @@ document.getElementById('note-input').addEventListener('keyup', function (event)
     }
 });
 
+//listen for enter key
+document.getElementById('note-input').addEventListener('keyup', function (event) {
+    if (event.keyCode === 13) {
+        addNote();
+    }
+});
+
 // Initial display of notes
 displayNotes();
+
+function editNote() {
+    const noteInput = document.getElementById('note-input');
+    const noteText = noteInput.value.trim();
+    noteInput.value = noteText;
+    noteInput.focus();
+}
