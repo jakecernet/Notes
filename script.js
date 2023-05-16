@@ -15,7 +15,7 @@ function displayNotes() {
             noteElement.innerHTML = `
                 <span class="note-number">${index + 1}.</span>
                 <span>${note}</span>
-                <button class="edit-btn" onclick="editNote(${index})">Edit</button>
+                <button class="edit-btn" onclick="editNote(${index})">✎</button>
                 <button class="delete-btn" onclick="deleteNote(${index})">Delete</button>
             `;
             notesContainer.appendChild(noteElement);
