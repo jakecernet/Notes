@@ -99,6 +99,21 @@ h1 {
     color: #3f3f3f;
 }
 
+.note .delete-btn:focus {
+    outline: none;
+}
+
+.note .edit-btn {
+    position: absolute;
+    top: 10px;
+    right: 100px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #3f3f3f;
+}
+
 .note .delete-btn:hover {
     background-color: rgba(115, 195, 233, 0.548);
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.678);
@@ -110,4 +125,33 @@ h1 {
 
 #notes .note:hover {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.767);
+}
+
+/* Search input styles */
+#search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Sort buttons styles */
+#controls {
+    align-items: center;
+}
+
+#controls button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+#controls button:hover {
+    background-color: #45a049;
 }
