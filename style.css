@@ -4,6 +4,7 @@ body {
     padding: 0;
     background-color: #f5f5f5;
     transition: ease 0.3s ease-in-out;
+    pointer-events: stroke;
 }
 
 .container {
@@ -79,6 +80,15 @@ h1 {
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.555);
     position: relative;
+}
+
+.note:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.555);
+    cursor: grab;
+}
+
+.note:active {
+    cursor: grabbing;
 }
 
 .note span {

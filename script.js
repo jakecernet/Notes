@@ -3,24 +3,46 @@ let notes = JSON.parse(localStorage.getItem('notes')) || [];
 
 // Display existing notes
 function displayNotes() {
-    const notesContainer = document.getElementById('notes');
-    notesContainer.innerHTML = '';
+    const undoneNotesContainer = document.getElementById('undone-notes');
+    const doneNotesContainer = document.getElementById('done-notes');
+
+    undoneNotesContainer.innerHTML = '';
+    doneNotesContainer.innerHTML = '';
 
     if (notes.length === 0) {
-        notesContainer.innerHTML = '<p>No notes yet</p>';
+        undoneNotesContainer.innerHTML = '<p>No notes yet</p>';
     } else {
+        // Sort the notes by "done" status
+        notes.sort(function (a, b) {
+            return a.done - b.done;
+        });
+
         notes.forEach(function (note, index) {
-            const noteElement = document.createElement('div');
-            noteElement.className = 'note';
-            noteElement.innerHTML = `
-                <span class="note-number">${index + 1}.</span>
-                <span>${note}</span>
-                <button class="edit-btn" onclick="editNote(${index})">✎</button>
-                <button class="delete-btn" onclick="deleteNote(${index})">Delete</button>
-            `;
-            notesContainer.appendChild(noteElement);
+            const noteElement = createNoteElement(index, note);
+
+            if (note.done) {
+                doneNotesContainer.appendChild(noteElement);
+            } else {
+                undoneNotesContainer.appendChild(noteElement);
+            }
         });
     }
+}
+
+// Create a note element
+function createNoteElement(index, note) {
+    const noteElement = document.createElement('div');
+    noteElement.className = 'note';
+    noteElement.setAttribute('draggable', 'true');
+    noteElement.setAttribute('ondragstart', 'dragStart(event)');
+    noteElement.setAttribute('data-index', index);
+    noteElement.innerHTML = `
+        <span class="note-number">${index + 1}.</span>
+        <span>${note.text}</span>
+        <button class="edit-btn" onclick="editNote(${index})">✎</button>
+        <button class="delete-btn" onclick="deleteNote(${index})">Delete</button>
+    `;
+    return noteElement;
 }
 
 // Add a new note
@@ -29,7 +51,11 @@ function addNote() {
     const noteText = noteInput.value.trim();
 
     if (noteText !== '') {
-        notes.push(noteText);
+        const newNote = {
+            text: noteText,
+            done: false
+        };
+        notes.push(newNote);
         localStorage.setItem('notes', JSON.stringify(notes));
         noteInput.value = '';
         displayNotes();
@@ -44,11 +70,8 @@ function deleteNote(index) {
 }
 
 // Edit a note
-// ...
-
-// Edit a note
 function editNote(index) {
-    const noteElement = document.getElementById('notes').children[index];
+    const noteElement = document.querySelector(`[data-index="${index}"]`);
     const noteText = noteElement.querySelector('span:not(.note-number)').textContent;
 
     // Replace the note text with an input field
@@ -85,49 +108,67 @@ function editNote(index) {
     });
 }
 
-// Save edited note
+// Save the edited note
 function saveNoteEdit(index) {
-    const noteElement = document.getElementById('notes').children[index];
+    const noteElement = document.querySelector(`[data-index="${index}"]`);
     const inputElement = noteElement.querySelector('input');
     const newNoteText = inputElement.value.trim();
 
     if (newNoteText !== '') {
-        notes[index] = newNoteText;
+        notes[index].text = newNoteText;
         localStorage.setItem('notes', JSON.stringify(notes));
         displayNotes();
     }
 }
 
-// Cancel editing a note
+// Cancel editing the note
 function cancelNoteEdit(index, oldNoteText) {
-    const noteElement = document.getElementById('notes').children[index];
-    const inputElement = noteElement.querySelector('input');
-
-    inputElement.value = oldNoteText;
-    noteElement.replaceChild(document.createElement('span'), inputElement);
-    noteElement.querySelector('.edit-btn').textContent = 'Edit';
-    noteElement.removeChild(noteElement.querySelector('.cancel-btn'));
+    notes[index].text = oldNoteText;
+    localStorage.setItem('notes', JSON.stringify(notes));
+    displayNotes();
 }
 
-//listen for escape key, close edit mode
-document.addEventListener('keydown', function (event) {
-    if (event.keyCode === 27) {
-        const editBtn = document.querySelector('.edit-btn');
-        if (editBtn) {
-            const index = editBtn.parentNode.querySelector('.note-number').textContent - 1;
-            const noteText = notes[index];
-            cancelNoteEdit(index, noteText);
-        }
-    }
-});
+// Drag start event handler
+function dragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.dataset.index);
+}
 
-// Event listeners
+// Allow drop event handler
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+// Drop event handler
+function drop(event) {
+    event.preventDefault();
+    const index = event.dataTransfer.getData('text/plain');
+    const sourceColumn = document.querySelector(`[data-index="${index}"]`).parentNode;
+    const targetColumn = event.target.closest('.column');
+    const targetStatus = targetColumn.id === 'column-done' ? true : false;
+
+    if (sourceColumn !== targetColumn) {
+        notes[index].done = targetStatus;
+        localStorage.setItem('notes', JSON.stringify(notes));
+        displayNotes();
+    }
+}
+
+// Add event listeners
 document.getElementById('add-btn').addEventListener('click', addNote);
+displayNotes();
+
+//check for enter key
 document.getElementById('note-input').addEventListener('keyup', function (event) {
     if (event.keyCode === 13) {
         addNote();
     }
-});
+}
+);
 
-// Initial display of notes
-displayNotes();
+//check for escape key
+document.getElementById('note-input').addEventListener('keyup', function (event) {
+    if (event.keyCode === 27) {
+        document.getElementById('note-input').value = '';
+    }
+}
+);

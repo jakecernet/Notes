@@ -20,7 +20,14 @@
                 <input type="text" id="note-input" placeholder="Enter your note">
                 <button id="add-btn" style="font-size: 35px;">&plus;</button>
             </div>
-            <div id="notes"></div>
+            <div id="column-undone" class="column" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Undone</h2>
+                <div id="undone-notes" class="notes-column" ondragstart="dragStart(event)" draggable="true"></div>
+            </div>
+            <div id="column-done" class="column" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Done</h2>
+                <div id="done-notes" class="notes-column" ondragstart="dragStart(event)" draggable="true"></div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
