@@ -8,16 +8,22 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .container:hover {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        margin: 10px;
+    }
 }
 
 h1 {
@@ -84,11 +90,15 @@ h1 {
 
 .note:hover {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.555);
+    scale: 1.005;
+    transition: 0.3s ease;
     cursor: grab;
 }
 
 .note:active {
     cursor: grabbing;
+    scale: 1.08;
+    opacity: 0.4;
 }
 
 .note span {
