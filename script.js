@@ -1,4 +1,51 @@
-// Retrieve existing notes from local storage
+function newColumn(){
+    const columns = document.querySelector('.columns');
+    const newColumn = document.createElement('div');
+    newColumn.className = 'column';
+
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'title';
+
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.placeholder = 'Title';
+
+    titleDiv.appendChild(titleInput);
+
+    const notesDiv = document.createElement('div');
+    notesDiv.className = 'notes';
+
+    const addButton = document.createElement('button');
+    addButton.textContent = '+';
+    addButton.onclick = function () {
+        newNote();
+    };
+
+    newColumn.appendChild(titleDiv);
+    newColumn.appendChild(notesDiv);
+
+    notesDiv.appendChild(addButton);
+
+    columns.appendChild(newColumn);
+}
+
+function newNote(){
+    const notesDiv = document.querySelector('.notes');
+    const newNote = document.createElement('div');
+    newNote.className = 'note';
+    newNote.setAttribute('draggable', 'true');
+    newNote.setAttribute('ondragstart', 'dragStart(event)');
+
+    const noteInput = document.createElement('input');
+    noteInput.type = 'text';
+    noteInput.placeholder = 'Note';
+
+    newNote.appendChild(noteInput);
+
+    notesDiv.appendChild(newNote);
+}
+
+/* // Retrieve existing notes from local storage
 let notes = JSON.parse(localStorage.getItem('notes')) || [];
 
 // Display existing notes
@@ -171,4 +218,4 @@ document.getElementById('note-input').addEventListener('keyup', function (event)
         document.getElementById('note-input').value = '';
     }
 }
-);
+); */

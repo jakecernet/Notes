@@ -1,36 +1,73 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title>Notes</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="icon" href="icon.png" type="image/icon" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Notes" />
+		<meta property="og:description" content="Simple notes taking website" />
+		<meta property="og:site_name" content="Notes" />
+	</head>
 
-<head>
-    <title>Notes</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="icon" href="icon.png" type="image/icon">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Notes">
-    <meta property="og:description" content="Simple notes taking website">
-    <meta property="og:site_name" content="Notes">
-    <meta property="og:locale" content="en_US">
-</head>
-
-<body>
-    <div class="container">
-        <h1>Notes</h1>
-        <div class="notes-container">
-            <div class="input-container">
-                <input type="text" id="note-input" placeholder="Enter your note">
-                <button id="add-btn" style="font-size: 35px;">&plus;</button>
-            </div>
-            <div id="column-undone" class="column" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <h2>Undone</h2>
-                <div id="undone-notes" class="notes-column" ondragstart="dragStart(event)" draggable="true"></div>
-            </div>
-            <div id="column-done" class="column" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <h2>Done</h2>
-                <div id="done-notes" class="notes-column" ondragstart="dragStart(event)" draggable="true"></div>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-
+	<body>
+		<nav>
+			<div class="title">
+				<h1>Notes</h1>
+			</div>
+			<div class="new">
+				<button onclick="newColumn()" title="Add new column">
+					&#43;
+				</button>
+			</div>
+		</nav>
+		<div class="container">
+			<div class="columns">
+				<div class="column">
+					<div class="title">
+						<input type="text" placeholder="Title" />
+					</div>
+					<div class="notes">
+						<div class="note">
+							<input type="text" placeholder="Note" />
+							<div class="buttons">
+								<button onclick="editNote()">✎</button>
+								<button onclick="deleteNote()">
+									&#128465;
+								</button>
+							</div>
+						</div>
+						<div class="note">
+							<input type="text" placeholder="Note" />
+							<div class="buttons">
+								<button onclick="editNote()">✎</button>
+								<button onclick="deleteNote()">
+									&#128465;
+								</button>
+							</div>
+						</div>
+						<button onclick="newNote()">+</button>
+					</div>
+				</div>
+				<div class="column">
+					<div class="title">
+						<input type="text" placeholder="Title" />
+					</div>
+					<div class="notes">
+						<div class="note">
+							<input class="noteText" type="text" value="Note" />
+							<div class="buttons">
+								<button onclick="editNote()">✎</button>
+								<button onclick="deleteNote()">
+									&#128465;
+								</button>
+							</div>
+						</div>
+						<button onclick="newNote()">+</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="script.js"></script>
+	</body>
 </html>
