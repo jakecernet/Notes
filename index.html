@@ -27,44 +27,29 @@
 					<div class="title">
 						<input type="text" placeholder="Title" />
 					</div>
-					<div class="notes">
+					<div class="notes" id="1">
 						<div class="note">
 							<input type="text" placeholder="Note" />
-							<div class="buttons">
-								<button onclick="editNote()">✎</button>
-								<button onclick="deleteNote()">
-									&#128465;
-								</button>
-							</div>
+							<button onclick="deleteNote()">&#128465;</button>
 						</div>
 						<div class="note">
 							<input type="text" placeholder="Note" />
-							<div class="buttons">
-								<button onclick="editNote()">✎</button>
-								<button onclick="deleteNote()">
-									&#128465;
-								</button>
-							</div>
+							<button onclick="deleteNote()">&#128465;</button>
 						</div>
-						<button onclick="newNote()">+</button>
 					</div>
+					<button onclick="newNote(1)">+</button>
 				</div>
 				<div class="column">
 					<div class="title">
 						<input type="text" placeholder="Title" />
 					</div>
-					<div class="notes">
+					<div class="notes" id="2">
 						<div class="note">
 							<input class="noteText" type="text" value="Note" />
-							<div class="buttons">
-								<button onclick="editNote()">✎</button>
-								<button onclick="deleteNote()">
-									&#128465;
-								</button>
-							</div>
+							<button onclick="deleteNote()">&#128465;</button>
 						</div>
-						<button onclick="newNote()">+</button>
 					</div>
+					<button onclick="newNote(2)">+</button>
 				</div>
 			</div>
 		</div>

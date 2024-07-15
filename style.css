@@ -92,7 +92,7 @@ nav {
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-            .buttons button {
+            button {
                 border: none;
                 padding: 5px;
                 cursor: pointer;
@@ -101,17 +101,18 @@ nav {
                 font-size: 1.5em;
             }
         }
+    }
 
-        button {
-            border: none;
-            cursor: pointer;
-            background: transparent;
-            transition: 0.3s;
-            font-size: 2.5em;
+    button {
+        border: none;
+        cursor: pointer;
+        background: transparent;
+        transition: 0.3s;
+        font-size: 2.5em;
 
-            &:active {
-                transform: scale(0.5);
-            }
+        &:active {
+            transform: scale(0.5);
         }
     }
+
 }

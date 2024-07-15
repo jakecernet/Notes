@@ -1,4 +1,8 @@
+columnNumber = 2;
+
 function newColumn(){
+    columnNumber++;
+
     const columns = document.querySelector('.columns');
     const newColumn = document.createElement('div');
     newColumn.className = 'column';
@@ -14,23 +18,23 @@ function newColumn(){
 
     const notesDiv = document.createElement('div');
     notesDiv.className = 'notes';
+    notesDiv.id = columnNumber;
 
     const addButton = document.createElement('button');
     addButton.textContent = '+';
     addButton.onclick = function () {
-        newNote();
+        newNote(columnNumber);
     };
 
     newColumn.appendChild(titleDiv);
     newColumn.appendChild(notesDiv);
-
-    notesDiv.appendChild(addButton);
+    newColumn.appendChild(addButton);
 
     columns.appendChild(newColumn);
 }
 
-function newNote(){
-    const notesDiv = document.querySelector('.notes');
+function newNote(column){
+    const notesDiv = document.getElementById(column);
     const newNote = document.createElement('div');
     newNote.className = 'note';
     newNote.setAttribute('draggable', 'true');
