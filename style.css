@@ -2,6 +2,9 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
+    background: url(bg3.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 nav {
@@ -14,6 +17,7 @@ nav {
     .title h1 {
         font-weight: 300;
         font-size: 1.8em;
+        color: #fff;
     }
 
     .new button {
@@ -24,6 +28,7 @@ nav {
         font-weight: 200;
         background: transparent;
         transition: 0.3s;
+        color: #fff;
     }
 
     .new button:hover {
@@ -34,9 +39,9 @@ nav {
 .container {
     margin: 10px 20px;
     padding: 20px;
-    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(133, 133, 133, 0.2);
+    backdrop-filter: blur(5px);
 }
 
 .columns {
@@ -55,8 +60,9 @@ nav {
     width: 300px;
     padding: 10px;
     gap: 10px;
-    background-color: #f4f4f4;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.153);
+    backdrop-filter: blur(100px);
+    background: rgba(255, 255, 255, 0.1);
 
     .title {
         height: 40px;
@@ -67,7 +73,9 @@ nav {
             height: 100%;
             padding: 5px;
             border: none;
+            color: #fff;
             background: transparent;
+            font-size: 1.8em;
         }
 
         input:focus {
@@ -89,8 +97,21 @@ nav {
             align-items: center;
             transition: 0.3s;
             padding: 0 10px;
-            border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(50px);
+            background: rgba(255, 255, 255, 0.1);
+
+            input {
+                border: none;
+                padding: 5px;
+                background: transparent;
+                color: #fff;
+                width: 100%;
+
+                &:focus {
+                    outline: none;
+                }
+            }
 
             button {
                 border: none;
@@ -99,6 +120,7 @@ nav {
                 background: transparent;
                 transition: 0.3s;
                 font-size: 1.5em;
+                color: #fff;
             }
         }
     }
@@ -109,6 +131,7 @@ nav {
         background: transparent;
         transition: 0.3s;
         font-size: 2.5em;
+        color: #fff;
 
         &:active {
             transform: scale(0.5);

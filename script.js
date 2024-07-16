@@ -1,52 +1,57 @@
 columnNumber = 2;
 
-function newColumn(){
-    columnNumber++;
+function newColumn() {
+	columnNumber++;
 
-    const columns = document.querySelector('.columns');
-    const newColumn = document.createElement('div');
-    newColumn.className = 'column';
+	const columns = document.querySelector(".columns");
+	const newColumn = document.createElement("div");
+	newColumn.className = "column";
 
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'title';
+	const titleDiv = document.createElement("div");
+	titleDiv.className = "title";
 
-    const titleInput = document.createElement('input');
-    titleInput.type = 'text';
-    titleInput.placeholder = 'Title';
+	const titleInput = document.createElement("input");
+	titleInput.type = "text";
+	titleInput.placeholder = "Title";
 
-    titleDiv.appendChild(titleInput);
+	titleDiv.appendChild(titleInput);
 
-    const notesDiv = document.createElement('div');
-    notesDiv.className = 'notes';
-    notesDiv.id = columnNumber;
+	const notesDiv = document.createElement("div");
+	notesDiv.className = "notes";
+	notesDiv.id = columnNumber;
 
-    const addButton = document.createElement('button');
-    addButton.textContent = '+';
-    addButton.onclick = function () {
-        newNote(columnNumber);
-    };
+	const addButton = document.createElement("button");
+	addButton.textContent = "+";
+	addButton.onclick = function () {
+		newNote(columnNumber);
+	};
 
-    newColumn.appendChild(titleDiv);
-    newColumn.appendChild(notesDiv);
-    newColumn.appendChild(addButton);
+	newColumn.appendChild(titleDiv);
+	newColumn.appendChild(notesDiv);
+	newColumn.appendChild(addButton);
 
-    columns.appendChild(newColumn);
+	columns.appendChild(newColumn);
 }
 
-function newNote(column){
-    const notesDiv = document.getElementById(column);
-    const newNote = document.createElement('div');
-    newNote.className = 'note';
-    newNote.setAttribute('draggable', 'true');
-    newNote.setAttribute('ondragstart', 'dragStart(event)');
+function newNote(column) {
+	const notesDiv = document.getElementById(column);
+	const newNote = document.createElement("div");
+	newNote.className = "note";
+	newNote.setAttribute("draggable", "true");
+	newNote.setAttribute("ondragstart", "dragStart(event)");
 
-    const noteInput = document.createElement('input');
-    noteInput.type = 'text';
-    noteInput.placeholder = 'Note';
+	const noteInput = document.createElement("input");
+	noteInput.type = "text";
+	noteInput.placeholder = "Note";
 
-    newNote.appendChild(noteInput);
+	const deleteBtn = document.createElement("button");
+	deleteBtn.textContent = "🗑";
+    deleteBtn
 
-    notesDiv.appendChild(newNote);
+	newNote.appendChild(noteInput);
+	newNote.appendChild(deleteBtn);
+
+	notesDiv.appendChild(newNote);
 }
 
 /* // Retrieve existing notes from local storage
