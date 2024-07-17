@@ -1,4 +1,4 @@
-columnNumber = 2;
+let columnNumber = 0;
 
 function newColumn() {
 	columnNumber++;
@@ -14,7 +14,13 @@ function newColumn() {
 	titleInput.type = "text";
 	titleInput.placeholder = "Title";
 
+	const deleteColumn = document.createElement("button");
+	deleteColumn.textContent = "🗑";
+	deleteColumn.onclick = function () {
+		columns.removeChild(newColumn);
+	};
 	titleDiv.appendChild(titleInput);
+	titleDiv.appendChild(deleteColumn);
 
 	const notesDiv = document.createElement("div");
 	notesDiv.className = "notes";
@@ -22,19 +28,23 @@ function newColumn() {
 
 	const addButton = document.createElement("button");
 	addButton.textContent = "+";
-	addButton.onclick = function () {
-		newNote(columnNumber);
-	};
+	addButton.onclick = (function (columnId) {
+		return function () {
+			newNote(columnId);
+		};
+	})(notesDiv.id);
 
 	newColumn.appendChild(titleDiv);
 	newColumn.appendChild(notesDiv);
 	newColumn.appendChild(addButton);
 
 	columns.appendChild(newColumn);
+
+	noteList = `noteList${columnNumber}`;
 }
 
-function newNote(column) {
-	const notesDiv = document.getElementById(column);
+function newNote(columnId) {
+	const notesDiv = document.getElementById(columnId);
 	const newNote = document.createElement("div");
 	newNote.className = "note";
 	newNote.setAttribute("draggable", "true");
@@ -46,12 +56,26 @@ function newNote(column) {
 
 	const deleteBtn = document.createElement("button");
 	deleteBtn.textContent = "🗑";
-    deleteBtn
+	deleteBtn.onclick = function () {
+		notesDiv.removeChild(newNote);
+	};
+	deleteBtn.textContent = "🗑";
 
 	newNote.appendChild(noteInput);
 	newNote.appendChild(deleteBtn);
 
 	notesDiv.appendChild(newNote);
+}
+
+function deleteNote() {}
+
+newColumn();
+newColumn();
+
+i = 5;
+for (i < 1; i--; ) {
+	newNote(1);
+	newNote(2);
 }
 
 /* // Retrieve existing notes from local storage

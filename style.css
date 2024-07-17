@@ -67,6 +67,9 @@ nav {
     .title {
         height: 40px;
         width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
 
         input {
             width: 100%;
@@ -80,6 +83,16 @@ nav {
 
         input:focus {
             outline: none;
+        }
+
+        button {
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            background: transparent;
+            transition: 0.3s;
+            font-size: 1.8em;
+            color: #fff;
         }
     }
 
