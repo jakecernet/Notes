@@ -18,6 +18,13 @@ function newColumn() {
 	deleteColumn.textContent = "🗑";
 	deleteColumn.onclick = function () {
 		columns.removeChild(newColumn);
+		// Remove the column and its coresponding notes from local storage
+		let columnsSaved = JSON.parse(localStorage.getItem("columns")) || [];
+		columnsSaved.splice(columnsSaved.indexOf(newColumn), 1);
+		localStorage.setItem("columns", JSON.stringify(columnsSaved));
+		localStorage.removeItem("notes" + newColumn.querySelector(".notes").id);
+		// set the column number to 1 less than the last column number
+		columnNumber = columnsSaved.length + 1;
 	};
 	titleDiv.appendChild(titleInput);
 	titleDiv.appendChild(deleteColumn);
@@ -73,14 +80,14 @@ function newNote(columnId) {
 
 	notesDiv.appendChild(newNote);
 
-    let notesSaved = JSON.parse(localStorage.getItem("notes" + columnId)) || [];
-    notesSaved.push(noteInput.value);
-    localStorage.setItem("notes" + columnId, JSON.stringify(notesSaved));
+	let notesSaved = JSON.parse(localStorage.getItem("notes" + columnId)) || [];
+	notesSaved.push(noteInput.value);
+	localStorage.setItem("notes" + columnId, JSON.stringify(notesSaved));
 
-    noteInput.addEventListener("input", function () {
-        notesSaved[notesSaved.length - 1] = noteInput.value;
-        localStorage.setItem("notes" + columnId, JSON.stringify(notesSaved));
-    });
+	noteInput.addEventListener("input", function () {
+		notesSaved[notesSaved.length - 1] = noteInput.value;
+		localStorage.setItem("notes" + columnId, JSON.stringify(notesSaved));
+	});
 }
 
 /* // Retrieve existing notes from local storage
