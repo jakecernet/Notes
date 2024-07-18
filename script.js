@@ -40,7 +40,14 @@ function newColumn() {
 
 	columns.appendChild(newColumn);
 
-	noteList = `noteList${columnNumber}`;
+	let columnsSaved = JSON.parse(localStorage.getItem("columns")) || [];
+	columnsSaved.push(newColumn);
+	localStorage.setItem("columns", JSON.stringify(columnsSaved));
+
+	titleInput.addEventListener("input", function () {
+		columnsSaved[columnsSaved.length - 1] = titleInput.value;
+		localStorage.setItem("columns", JSON.stringify(columnsSaved));
+	});
 }
 
 function newNote(columnId) {
@@ -65,17 +72,15 @@ function newNote(columnId) {
 	newNote.appendChild(deleteBtn);
 
 	notesDiv.appendChild(newNote);
-}
 
-function deleteNote() {}
+    let notesSaved = JSON.parse(localStorage.getItem("notes" + columnId)) || [];
+    notesSaved.push(noteInput.value);
+    localStorage.setItem("notes" + columnId, JSON.stringify(notesSaved));
 
-newColumn();
-newColumn();
-
-i = 5;
-for (i < 1; i--; ) {
-	newNote(1);
-	newNote(2);
+    noteInput.addEventListener("input", function () {
+        notesSaved[notesSaved.length - 1] = noteInput.value;
+        localStorage.setItem("notes" + columnId, JSON.stringify(notesSaved));
+    });
 }
 
 /* // Retrieve existing notes from local storage
